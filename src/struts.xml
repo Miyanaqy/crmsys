@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="crm" extends="struts-default" namespace="/">
+	<!-- 
+	<interceptors>
+		<interceptor name="privilegeInterceptor" class="com.crmsys.web.interceptor.PrivilegeInterceptor" ></interceptor>
+		<interceptor-stack name="myStack">
+			<interceptor-ref name="privilegeInterceptor">
+				<param name="excludeMethods">login, regist, checkUsername</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</interceptor-stack>
+	</interceptors>
+	
+	<default-interceptor-ref name="myStack"></default-interceptor-ref>
+	 -->
+	<global-results>		
+		<result name="login" type="redirect">/login.jsp</result>
+	</global-results>
+	
+		<action name="user_*" class="userAction" method="{1}" >
+			<result name="error">/jsp/error.jsp</result>
+			<result name="index">/index.jsp</result>
+		</action>
+		
+		<action name="customer_*" class="customerAction" method="{1}" >
+			<result name="list">/jsp/customer/list.jsp</result>
+		</action>
+		
+		<action name="dict_*" class="dictAction" method="{1}" >
+			
+		</action>
+	</package>
+</struts>
