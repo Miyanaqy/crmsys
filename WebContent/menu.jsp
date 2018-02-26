@@ -156,7 +156,7 @@ A.active {
 											cellPadding=2 width=155 align=center border=0>
 											<TBODY>
 												<TR>
-													<TD class=menuSmall><A class=style2 href="linkmanServlet?method=add"
+													<TD class=menuSmall><A class=style2 href="${pageContext.request.contextPath }/jsp/linkman/add.jsp"
 														target=main>－ 新增联系人</A></TD>
 												</TR>
 												<TR>
@@ -209,15 +209,15 @@ A.active {
 											cellPadding=2 width=155 align=center border=0>
 											<TBODY>
 												<TR>
-													<TD class=menuSmall><A class=style2 href="#"
+													<TD class=menuSmall><A class=style2 href="${pageContext.request.contextPath }/jsp/query/queryCustomer.jsp"
 														target=main>－ 客户信息查询</A></TD>
 												</TR>
 												<TR>
-													<TD class=menuSmall><A class=style2 href="#"
+													<TD class=menuSmall><A class=style2 href="${pageContext.request.contextPath }/jsp/query/queryLinkman.jsp"
 														target=main>－ 联系人信息查询</A></TD>
 												</TR>
 												<TR>
-													<TD class=menuSmall><A class=style2 href="#"
+													<TD class=menuSmall><A class=style2 href="${pageContext.request.contextPath }/jsp/query/queryVisit.jsp"
 														target=main>－ 客户拜访记录查询</A></TD>
 												</TR>
 											</TBODY>

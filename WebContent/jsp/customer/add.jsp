@@ -16,6 +16,7 @@
 	//页面的加载
 	/*
 	$(function(){
+		/*
 		// 发送ajax的请求
 		var url = "${ pageContext.request.contextPath }/dict_findByCode.action";
 		var param = {"dict_type_code":"006"};
@@ -36,16 +37,40 @@
 		},"json");
 	});
 	*/
-	
 	$(function(){
-		var param = {"dict_type_code":"006"};
-		var url="${pageContext.request.contextPath}/dict_findByCode.action";
-		$.post(url, param, function(result){
+		var url="${pageContext.request.contextPath}/dict_findAll.action";
+		$.post(url, {"dict_type_code":""}, function(result){
 			$(result).each(function(i, n){
+				if(n.dict_type_code == "006"){
+					$("#levelId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
+				}else if(n.dict_type_code == "002"){
+					$("#sourceId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
+				}else if(n.dict_type_code == "001"){
+					$("#industryId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
+				}
 				
-				$("#levelId").append("<option value='"+ n.dict_id +"'>" + n.dict_item_name +"</option>");
 			});
 		}, "Json");
+		/*
+		$.post(url, {"dict_type_code":"002"}, function(result){
+			$(result).each(function(i, n){
+				$("#sourceId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
+			});
+		}, "json");
+		
+		$.post(url, {"dict_type_code":"001"}, function(result){
+			$(result).each(function(i, n){
+				$("#industryId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
+			});
+		}, "json");
+		*/
+		var url1 = "${pageContext.request.contextPath}/user_findAll.action";
+		$.post(url1,{"user_name":""}, function(result){
+			$(result).each(function(i, n){
+				$("#userId").append("<option value='"+ n.user_id +"'>"+ n.user_name +"</option>");
+			});
+		}, "json");
+		
 	});
 </script>
 
@@ -91,7 +116,7 @@
 								<td>客户级别 ：</td>
 								<td>
 									<select name="level.dict_id" id="levelId">
-										<option>----请选择----</option>
+										<option value="">----请选择----</option>
 									</select>
 									<!-- <input type="text" name="cust_level" id="cust_level" />-->
 								</td>
@@ -101,15 +126,11 @@
 								<td>信息来源 ：</td>
 								<td>
 									<select name="source.dict_id" id="sourceId">
-										<option>----请选择----</option>
+										<option value="">----请选择----</option>
 									</select>
 									
 								</td>
-								<td>联系人：</td>
-								<td>
-								<INPUT class=textbox id="cust_linkman"
-														style="WIDTH: 180px" maxLength=50 name="cust_linkman">
-								</td>
+								
 							</TR>
 							
 							<TR>
@@ -136,7 +157,7 @@
 								<td>所属行业 ：</td>
 								<td>
 								<select name="industry.dict_id" id="industryId">
-									<option>----请选择----</option>
+									<option value="">----请选择----</option>
 								</select>
 								</td>
 							</TR>
@@ -144,7 +165,7 @@
 								<td>负责人 ：</td>
 								<td>
 								<select name="user.user_id" id="userId">
-									<option>----请选择----</option>
+									<option value="">----请选择----</option>
 								</select>
 								</td>
 								

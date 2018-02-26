@@ -1,6 +1,9 @@
 package com.crmsys.service;
 
+import java.util.List;
+
 import com.crmsys.domain.User;
+
 
 public interface UserService {
 
@@ -9,5 +12,7 @@ public interface UserService {
 	User checkUsername(User user);
 
 	User login(User user);
+
+	List<User> findAll();
 	
 }

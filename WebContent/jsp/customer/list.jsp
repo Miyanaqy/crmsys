@@ -1,4 +1,5 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +12,31 @@
 	rel=stylesheet>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
 <SCRIPT language=javascript>
+$(function(){
+	var levelId = "${model.level.dict_id}";
+	var sourceId = "${model.source.dict_id}"
+	var url = "${pageContext.request.contextPath}/dict_findAll.action";
+	$.post(url, {"dict_type_code":""}, function(result){
+		$(result).each(function(i, n){
+			if(n.dict_type_code == "006"){
+				if(n.dict_id == levelId){
+					$("#levelId").append("<option value='"+ n.dict_id +"'selected>" + n.dict_item_name + "</option>");
+				}else{
+					$("#levelId").append("<option value='"+ n.dict_id +"'>" + n.dict_item_name + "</option>");
+				}
+				
+			}else if(n.dict_type_code == "002"){
+				if(n.dict_id == sourceId){
+					$("#sourceId").append("<option value='"+ n.dict_id +"'selected>" + n.dict_item_name + "</option>");
+				}else{
+					$("#sourceId").append("<option value='"+ n.dict_id +"'>" + n.dict_item_name + "</option>");
+				}
+			}
+			
+		});
+	}, "json");
+})	
+
 	// 提交分页的查询的表单
 	function to_page(page){
 		if(page){
@@ -18,7 +44,6 @@
 		}
 		document.customerForm.submit();
 	}
-	
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
@@ -67,14 +92,14 @@
 													
 													<td>客户级别</td>
 													<td>
-														<select name="" id="levelId">
+														<select name="level.dict_id" id="levelId">
 															<option value="">--请选择--</option>
 														</select>
 													</td>
 													
 													<td>客户来源</td>
 													<td>
-														<select name="	" id="sourceId">
+														<select name="source.dict_id" id="sourceId">
 															<option value="">--请选择--</option>
 														</select>
 													</td>
@@ -99,7 +124,7 @@
 													<TD>客户名称</TD>
 													<TD>客户级别</TD>
 													<TD>客户来源</TD>
-													<TD>联系人</TD>
+													<TD>所属行业</TD>
 													<TD>电话</TD>
 													<TD>手机</TD>
 													<TD>操作</TD>
@@ -110,10 +135,10 @@
 													style="FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none">
 													<TD>${customer.cust_name }</TD>
 													
-													<TD>${customer.cust_level}</TD>
-													<TD>${customer.cust_resource}</TD>
+													<TD>${customer.level.dict_item_name}</TD>
+													<TD>${customer.source.dict_item_name}</TD>
 													
-													<TD>${customer.cust_linkman }</TD>
+													<TD>${customer.industry.dict_item_name }</TD>
 													<TD>${customer.cust_phone }</TD>
 													<TD>${customer.cust_mobile }</TD>
 													<TD>
@@ -136,8 +161,9 @@
 												共[<B>${page.totalCount}</B>]条记录，共[<B>${page.totalPage}</B>]页
 												,每页显示
 												<select name="pageSize">
-													<option value="2" ><c:if test="${page.pageSize==2 }">selected</c:if>2 </option>
-													<option value="3" ><c:if test="${page.pageSize==3 }">selected</c:if>3 </option>
+													<c:forEach var="x" begin="5" end="10" step="1">
+														<option value="${x}" <c:if test="${page.pageSize == x}"> selected="selected" </c:if>>${x}</option>
+													</c:forEach>
 												</select>
 												
 												条
@@ -153,7 +179,7 @@
 												</c:if>
 												
 												到
-												<input type="text" size="3" id="page" name="pageCode" />
+												<input type="text" size="3" id="page" name="pageCode" value="${page.pageCode}"/>
 												页
 												
 												<input type="button" value="Go" onclick="to_page()"/>

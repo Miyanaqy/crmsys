@@ -11,7 +11,7 @@ public interface BaseDao<T> {
 	
 	public T delete(T t);
 	
-	public void Update(T t);
+	public void update(T t);
 	
 	public T findById(Long id);
 	
@@ -22,5 +22,7 @@ public interface BaseDao<T> {
 	public int getCount(DetachedCriteria criteria);
 	
 	public PageBean<T> findByPage(PageBean<T> pagebean, DetachedCriteria criteria);
+	
+	public List<T> findByCriteria(DetachedCriteria criteria);
 
 }

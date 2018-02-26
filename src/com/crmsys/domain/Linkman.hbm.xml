@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    	<class name="com.crmsys.domain.Linkman" table="cst_linkman">
+	    	<id name="link_id" column="link_id">
+	    		<generator class="uuid"/>
+	    	</id>
+	    	<property name="link_name" column="link_name" />
+	    	<property name="link_position" column="link_position" />
+	    	<property name="link_gender" column="link_gender" />
+	    	<property name="link_phone" column="link_phone" />
+	    	<property name="link_mobile" column="link_mobile" />
+	    	<property name="link_qq" column="link_qq" />
+	    	<property name="link_mail" column="link_mail" />
+	    	<property name="link_memo" column="link_memo" />
+	    	
+	    	<many-to-one name="customer" class="com.crmsys.domain.Customer" column="link_customer_id" />
+	    	<many-to-one name="create_user" class="com.crmsys.domain.User" column="link_create_id" />
+    	
+    	</class>
+    </hibernate-mapping>

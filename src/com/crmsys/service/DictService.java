@@ -8,4 +8,6 @@ public interface DictService {
 
 	List<Dict> findByCode(Dict dict);
 
+	List<Dict> findAll();
+
 }

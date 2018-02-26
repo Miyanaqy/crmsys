@@ -14,41 +14,48 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
 
 <script type="text/javascript">
-	$(function(){
-		// 发送ajax的请求
-		var url = "${ pageContext.request.contextPath }/dict_findByCode.action";
-		var param = {"dict_type_code":"006"};
-		$.post(url,param,function(data){
-			// 遍历
-			$(data).each(function(i,n){
-				// 先获取值栈中的值，使用EL表达式
-				var vsId = "${model.level.dict_id}";
-				// 值栈中的id值和遍历的id值相同，让被选中
-				if(vsId == n.dict_id){
-					// JQ的DOM操作
-					$("#levelId").append("<option value='"+n.dict_id+"' selected>"+n.dict_item_name+"</option>");
+$(function(){
+	var url="${pageContext.request.contextPath}/dict_findAll.action";
+	$.post(url,  function(result){
+		var sourceId = "${model.source.dict_id}";
+		var levelId = "${model.level.dict_id}";
+		var industryId = "${model.industry.dict_id}";
+		$(result).each(function(i, n){
+			if(n.dict_type_code == "006"){
+				if(n.dict_id == levelId){
+					$("#levelId").append("<option value='"+ n.dict_id +"' selected>"+ n.dict_item_name +"</option>");
 				}else{
-					$("#levelId").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					$("#levelId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
 				}
-			});
-		},"json");
-		
-		// 获取来源
-		var param = {"dict_type_code":"002"};
-		$.post(url,param,function(data){
-			// 遍历
-			$(data).each(function(i,n){
-				var vsId = "${model.source.dict_id}";
-				if(vsId == n.dict_id){
-					// JQ的DOM操作
-					$("#sourceId").append("<option value='"+n.dict_id+"' selected>"+n.dict_item_name+"</option>");
+			}else if(n.dict_type_code == "002"){
+				if(n.dict_id == sourceId){
+					$("#sourceId").append("<option value='"+ n.dict_id +"' selected>"+ n.dict_item_name +"</option>");
 				}else{
-					$("#sourceId").append("<option value='"+n.dict_id+"'>"+n.dict_item_name+"</option>");
+					$("#sourceId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
 				}
-			});
-		},"json");
-	});
+			}else if(n.dict_type_code == "001"){
+				if(n.dict_id == industryId){
+					$("#industryId").append("<option value='"+ n.dict_id +"' selected>"+ n.dict_item_name +"</option>");
+				}else{
+					$("#industryId").append("<option value='"+ n.dict_id +"'>"+ n.dict_item_name +"</option>");
+				}
+			}
+			
+		});
+	}, "Json");
 	
+	var url2 = "${pageContext.request.contextPath}/user_findAll.action";
+	$.post(url2, function(result){
+		var userId = "${model.user.user_id}";
+		$(result).each(function(i, n){
+			if(n.user_id == userId){
+				$("#userId").append("<option value='"+ n.user_id +"' selected>" + n.user_name + "</option>");
+			}else{
+				$("#userId").append("<option value='"+ n.user_id +"'>" + n.user_name + "</option>");
+			}
+		});
+	}, "json");
+});
 </script>
 
 
@@ -60,9 +67,9 @@
 		
 		<!-- 隐藏的客户的主键，不能忘记 -->
 		<input type="hidden" name="cust_id" value="${model.cust_id}"/>
-		<!-- 隐藏文件上传的路径 -->
-		<input type="hidden" name="filepath" value="${model.filepath}"/>
-		
+		<!-- 隐藏文件上传的路径 
+		<input type="hidden" name="filepath" value=""/>
+		-->
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
 				<TR>
@@ -93,55 +100,69 @@
 							<TR>
 								<td>客户名称：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
-											style="WIDTH: 180px" maxLength=50 name="cust_name" value="${model.cust_name }">
+								<INPUT class=textbox id="cust_name"
+														style="WIDTH: 180px" maxLength=50 name="cust_name" value="${model.cust_name }">
 								</td>
-								
 								<td>客户级别 ：</td>
 								<td>
-									<select name="level.dict_id" id="levelId"></select>
+									<select name="level.dict_id" id="levelId">
+									</select>
+									<!-- <input type="text" name="cust_level" id="cust_level" />-->
+								</td>
+							</TR>
+							
+							<TR>
+								<td>信息来源 ：</td>
+								<td>
+									<select name="source.dict_id" id="sourceId">
+									</select>
+									
 								</td>
 								
 							</TR>
 							
-							<TR>
-								<td>信息来源：</td>
-								<td>
-									<select name="source.dict_id" id="sourceId"></select>
-								</td>
-								
-								<td>联系人：</td>
-								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="cust_linkman" value="${model.cust_linkman }">
-								</td>
-							</TR>
 							<TR>
 								
 								
 								<td>固定电话 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
+								<INPUT class=textbox id="cust_phone"
 														style="WIDTH: 180px" maxLength=50 name="cust_phone" value="${model.cust_phone }">
 								</td>
 								<td>移动电话 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
+								<INPUT class=textbox id="cust_mobile"
 														style="WIDTH: 180px" maxLength=50 name="cust_mobile" value="${model.cust_mobile }">
 								</td>
 							</TR>
 							
 							<TR>
-								<td>上传资质 ：</td>
+								<td>联系地址 ：</td>
+								<td>
+								<INPUT class=textbox id="cust_address"
+														style="WIDTH: 180px" maxLength=50 name="cust_address" value="${model.cust_address }">
+								</td>
+								<td>所属行业 ：</td>
+								<td>
+								<select name="industry.dict_id" id="industryId">
+								</select>
+								</td>
+							</TR>
+							<TR>
+								<td>负责人 ：</td>
+								<td>
+								<select name="user.user_id" id="userId">
+								</select>
+								</td>
+								
+								<td>上传资质：</td>
 								<td>
 									<input type="file" name="upload" />
 								</td>
 							</TR>
-							
 							<tr>
 								<td rowspan=2>
-								<INPUT class=button id=sButton2 type=submit
-														value=" 保存 " name=sButton2>
+								<INPUT class=button id=sButton2 type=submit value="保存 " name=sButton2>
 								</td>
 							</tr>
 						</TABLE>

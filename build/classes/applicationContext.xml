@@ -34,9 +34,11 @@
 		
 		<property name="mappingResources">
 			<list>
+				<value>com/crmsys/domain/Linkman.hbm.xml</value>
 				<value>com/crmsys/domain/User.hbm.xml</value>
 				<value>com/crmsys/domain/Customer.hbm.xml</value>
 				<value>com/crmsys/domain/Dict.hbm.xml</value>
+				<value>com/crmsys/domain/visit.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -84,7 +86,36 @@
 		<property name="dictDao" ref="dictDao" />
 	</bean>
 	
-	<bean id="dictAction" class="com.crmsys.web.action.DictAction">
+	<bean id="dictAction" class="com.crmsys.web.action.DictAction" scope="prototype">
 		<property name="dictService" ref="dictService" />
 	</bean>
+	
+	<!-- Linkman相关 -->
+	
+	<bean id="linkmanDao" class="com.crmsys.dao.impl.LinkmanDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="linkmanService" class="com.crmsys.service.impl.LinkmanServiceImpl">
+		<property name="linkmanDao" ref="linkmanDao" />
+	</bean>
+	
+	<bean id="linkmanAction" class="com.crmsys.web.action.LinkmanAction" scope="prototype">
+		<property name="linkmanService" ref="linkmanService" />
+	</bean>
+	
+	<!-- Visit相关 -->
+	
+	<bean id="visitDao" class="com.crmsys.dao.impl.VisitDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="visitService" class="com.crmsys.service.impl.VisitServiceImpl">
+		<property name="visitDao" ref="visitDao" />
+	</bean>
+	
+	<bean id="visitAction" class="com.crmsys.web.action.VisitAction" scope="prototype">
+		<property name="visitService" ref="visitService" />
+	</bean>
+	
 </beans>

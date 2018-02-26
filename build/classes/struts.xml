@@ -4,7 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="crm" extends="struts-default" namespace="/">
-	<!-- 
+
 	<interceptors>
 		<interceptor name="privilegeInterceptor" class="com.crmsys.web.interceptor.PrivilegeInterceptor" ></interceptor>
 		<interceptor-stack name="myStack">
@@ -17,7 +17,7 @@
 	</interceptors>
 	
 	<default-interceptor-ref name="myStack"></default-interceptor-ref>
-	 -->
+
 	<global-results>		
 		<result name="login" type="redirect">/login.jsp</result>
 	</global-results>
@@ -29,10 +29,23 @@
 		
 		<action name="customer_*" class="customerAction" method="{1}" >
 			<result name="list">/jsp/customer/list.jsp</result>
+			<result name="edit">/jsp/customer/edit.jsp</result>
+			<result name="tolist" type="redirectAction">customer_findByPage.action</result>
 		</action>
 		
 		<action name="dict_*" class="dictAction" method="{1}" >
 			
+		</action>
+		
+		<action name="linkman_*" class="linkmanAction" method="{1}">
+			<result name="list">/jsp/linkman/list.jsp</result>
+			<result name="edit">/jsp/linkman/edit.jsp</result>
+			<result name="tolist" type="redirectAction">linkman_findByPage.action</result>
+		
+		</action>
+		
+		<action name="visit_*" class="visitAction" method="{1}" >
+			<result name="list">/jsp/visit/list.jsp</result>
 		</action>
 	</package>
 </struts>

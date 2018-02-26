@@ -1,5 +1,7 @@
 package com.crmsys.service.impl;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
@@ -18,7 +20,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void add(User user) {
-		System.out.println("service≤„±ª∑√Œ °§°§°§");
 		String fullpwd = user.getUser_name() + user.getUser_password() + Constance.KEY;
 		String md5pwd = DigestUtils.md5DigestAsHex(fullpwd.getBytes());
 		user.setUser_password(md5pwd);
@@ -37,6 +38,10 @@ public class UserServiceImpl implements UserService {
 		user.setUser_password(md5pwd);
 		User findUser = userDao.login(user);
 		return findUser;
+	}
+
+	public List<User> findAll() {
+		return userDao.findAll();
 	}
 
 }

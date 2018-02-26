@@ -1,12 +1,16 @@
 package com.crmsys.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class Customer {
 	
 	private String cust_id;
 	private String cust_name;
 //	private String cust_level;
 //	private String cust_resource;
-	private String cust_linkman;
 	private String cust_phone;
 	private String cust_mobile;
 	private String cust_address;
@@ -14,11 +18,18 @@ public class Customer {
 //	private String cust_fax;
 	private String cust_filePath;
 	
+	@JSONField(serialize=false)
 	private Dict level;
+	@JSONField(serialize=false)
 	private Dict source;
+	@JSONField(serialize=false)
 	private Dict industry;
+	@JSONField(serialize=false)
 	private User create_user;
+	@JSONField(serialize=false)
 	private User user;
+	
+	
 	public String getCust_id() {
 		return cust_id;
 	}
@@ -31,12 +42,7 @@ public class Customer {
 	public void setCust_name(String cust_name) {
 		this.cust_name = cust_name;
 	}
-	public String getCust_linkman() {
-		return cust_linkman;
-	}
-	public void setCust_linkman(String cust_linkman) {
-		this.cust_linkman = cust_linkman;
-	}
+
 	public String getCust_phone() {
 		return cust_phone;
 	}

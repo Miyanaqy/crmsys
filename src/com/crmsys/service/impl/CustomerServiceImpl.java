@@ -1,5 +1,7 @@
 package com.crmsys.service.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,27 @@ public class CustomerServiceImpl implements CustomerService {
 		page.setPageSize(pageSize);
 		page.setTotalCount(totalCount);
 		return customerDao.findByPage(page, criteria);
+	}
+
+	public List<Customer> findAll() {
+		// TODO Auto-generated method stub
+		return customerDao.findAll();
+	}
+
+	public Customer findById(String cust_id) {
+		return customerDao.findById(cust_id);
+	}
+
+	public Customer delete(String cust_id) {
+		// TODO Auto-generated method stub
+		Customer customer = customerDao.findById(cust_id);
+		customerDao.delete(customer);
+		return customer;
+	}
+
+	public void update(Customer customer) {
+		// TODO Auto-generated method stub
+		customerDao.update(customer);
 	}
 	
 

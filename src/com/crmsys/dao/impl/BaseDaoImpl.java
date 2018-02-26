@@ -1,5 +1,7 @@
 package com.crmsys.dao.impl;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -15,6 +17,16 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
 	private Class clazz;
 	
+	public BaseDaoImpl() {
+		Class c = this.getClass();
+		Type type = c.getGenericSuperclass();
+		if(type instanceof ParameterizedType) {
+			ParameterizedType ptype = (ParameterizedType)type;
+			Type [] types = ptype.getActualTypeArguments();
+			this.clazz = (Class) types[0];
+		}
+	}
+	
 	public void save(T t) {
 		this.getHibernateTemplate().save(t);
 		
@@ -25,7 +37,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		return t;
 	}
 
-	public void Update(T t) {
+	public void update(T t) {
 		this.getHibernateTemplate().update(t);
 		
 	}
@@ -60,6 +72,10 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		}
 		criteria.setProjection(null);
 		return pageCount;
+	}
+
+	public List<T> findByCriteria(DetachedCriteria criteria) {
+		return  (List<T>) this.getHibernateTemplate().findByCriteria(criteria);
 	}
 
 }
